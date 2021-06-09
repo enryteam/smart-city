@@ -1,5 +1,10 @@
 [TOC]
 
+信号灯消息。包含了一个或多个路口信号灯的当前状态信息。结合MAP消息，为车辆提供实时的前方信号灯相位信息。
+图43给出了SPAT消息的主体结构。其中实线框为必有项，虚线框为可选项。
+
+![image-20210609095414996](https://gitee.com/AiShiYuShiJiePingXing/img/raw/master/img/image-20210609095414996.png)
+
 # 一、SPAT信号灯消息   机器发送的值：ABCDEDF
 
 ```json

@@ -22,6 +22,8 @@ ASN.1 的描述可以容易地被映射成 C 或 C++ 或 Java 的数据结构，
 
 同时，ASN.1也是一种用于描述结构化客体的结构和内容的语言。
 
+![image-20210609091117500](https://gitee.com/AiShiYuShiJiePingXing/img/raw/master/img/image-20210609091117500.png)
+
 
 
 # 二、定义
