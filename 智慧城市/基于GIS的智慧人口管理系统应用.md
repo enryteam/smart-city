@@ -1,0 +1,543 @@
+[基于GIS的智慧人口管理系统应用](https://www.cnblogs.com/shengya/p/14861739.html)
+
+开发智慧实景三维基础大数据平台，主要包括智慧人口管理系统、三维规划系统和智慧园区“一张图”系统。加载高精度航飞倾斜测绘成果数据，将规划数据、地籍数据、倾斜摄影数据等与具体业务数据相结合，利用PC端、浏览器、移动设备进行展示，开创城市规划、智慧乡村、园区管理新模式。
+
+　　智慧人口管理系统
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title data-i18n="resources.title_dynamicPlot"></title>
+<style type="text/css">
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: #fff;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+        }
+
+        #map {
+            position: absolute;
+            left: 250px;
+            right: 0px;
+            height: 100%;
+        }
+
+        #menuPlotting {
+            position: absolute;
+            top: 20%;
+            z-index: 99999999999;
+            border-radius: 4px;
+            padding-top: 2px;
+            left: 265px;
+            color: #000000;
+            background-color: #fff;
+        }
+
+        #menu {
+            float: left;
+            background: #ffffff;
+            width: 250px;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<div id="menu">
+<div class="easyui-panel" style="position:absolute;top:0px;bottom:0px;left:0px;right:0px;padding:5px; width: 100%;">
+<div class="easyui-tabs" style="width: 100%;height: 100%">
+<div id="plotPanel" data-i18n="[title]resources.text_drawPanel" style="overflow: hidden"></div>
+<div id="stylePanel" data-i18n="[title]resources.text_attributePanel"></div>
+</div>
+</div>
+</div>
+<div id="map">
+<div id="menuPlotting" class="sticklr" style="left: 1%;color:rgb(0,0,0);background-color: #fff;">
+<li>
+<a class="glyphicon plotting-glyphicon-draw-deactivate notArrow" data-i18n="[title]resources.text_cancelDraw" onclick="PlottingDrawCancel()"></a>
+</li>
+<li>
+<a class="glyphicon plotting-glyphicon-draw-removeAll notArrow" data-i18n="[title]resources.text_input_value_clear"></a>
+<ul>
+<li><input type="button" data-i18n="[value]resources.btn_deleteMarker" onclick="deleteSymbol()" style="width:70px;height: 25px ;margin:0 auto;"/> </li>
+<li><input type="button" data-i18n="[value]resources.btn_clearLayers" onclick="PlottingClear()" style="width: 70px;height: 25px ;margin:0 auto;"/></li>
+</ul>
+</li>
+<li>
+<a class="glyphicon glyphicon-pencil notArrow" data-i18n="[title]resources.text_editor"></a>
+<ul>
+<li><input type="button" data-i18n="[value]resources.btn_copy" onclick="copySymbol()" style="width:70px;height: 25px ;margin:0 auto;"/> </li>
+<li><input type="button" data-i18n="[value]resources.btn_cut" onclick="cutSymbol()" style="width: 70px;height: 25px ;margin:0 auto;"/></li>
+<li><input type="button" data-i18n="[value]resources.btn_paste" onclick="pasteSymbol()" style="width: 70px;height: 25px ;margin:0 auto;"/></li>
+</ul>
+</li>
+<li>
+<a class="glyphicon glyphicon-plus notArrow" data-i18n="[title]resources.text_addLayer" onclick="addPlottingLayer()"></a>
+</li>
+<li>
+<a class="glyphicon plotting-lyphicon-save-simulationMap" data-i18n="[title]resources.text_situationMapOperation"></a>
+<ul>
+<li><input type="button" data-i18n="[value]resources.btn_saveSimulationMap" onclick="saveSimulationMap()" style="width:70px;height: 25px ;margin:0 auto;"/> </li>
+<li><input type="button" data-i18n="[value]resources.btn_loadSimulationMap" onclick="loadSimulationMap()" style="width: 70px;height: 25px ;margin:0 auto;"/></li>
+</ul>
+</li>
+<li>
+<a class="glyphicon glyphicon-edit notArrow" data-i18n="[title]resources.text_editMarker"></a>
+<ul>
+<li><input type="button" data-i18n="[value]resources.btn_editRectangle" onclick="editCircusRetangle()" style="width:85px;height: 25px ;margin:0 auto;"/> </li>
+<li><input type="button" data-i18n="[value]resources.btn_editNode" onclick="editContorPoints()" style="width:70px;height: 25px ;margin:0 auto;"/> </li>
+<li><input type="button" data-i18n="[value]resources.btn_addNode" onclick="addControlPoints()" style="width: 70px;height: 25px ;margin:0 auto;"/></li>
+</ul>
+</li>
+<li>
+<a class="glyphicon glyphicon-lock notArrow" data-i18n="[title]resources.text_aboutMode"></a>
+<ul>
+<li><input type="button" data-i18n="[value]resources.btn_lockSwitch" onclick="setPlottingLayerIsLocked()" style="width:85px;height: 25px ;margin:0 auto;"/> </li>
+<li><input type="button" data-i18n="[value]resources.btn_editSwitch" onclick="setPlottingLayerIsEdit()" style="width:85px;height: 25px ;margin:0 auto;"/> </li>
+<li><input type="button" data-i18n="[value]resources.btn_selectSwitch" onclick="setPlottingLayerIsSelected()" style="width:85px;height: 25px ;margin:0 auto;"/> </li>
+</ul>
+</li>
+<li>
+<a class="glyphicon glyphicon-check notArrow" data-i18n="[title]resources.text_multiselect" onclick="multiSelectModel()"></a>
+</li>
+<li>
+<a class="glyphicon glyphicon-align-justify notArrow" data-i18n="[title]resources.text_multiselectAlign"></a>
+<ul>
+<li><input type="button" data-i18n="[value]resources.btn_leftAlignment" onclick="setSymbolAlighLeft()" style="width:70px;height: 25px ;margin:0 auto;"/> </li>
+<li><input type="button" data-i18n="[value]resources.btn_rightAlignment" onclick="setSymbolAlighRight()" style="width: 70px;height: 25px ;margin:0 auto;"/></li>
+<li><input type="button" data-i18n="[value]resources.btn_topAlignment" onclick="setSymbolAlighUp()" style="width:70px;height: 25px ;margin:0 auto;"/> </li>
+<li><input type="button" data-i18n="[value]resources.btn_bottomAlignment" onclick="setSymbolAlighDown()" style="width:70px;height: 25px ;margin:0 auto;"/> </li>
+<li><input type="button" data-i18n="[value]resources.btn_verticalCenter" onclick="setSymbolAlighVerticalcenter()" style="width:70px;height: 25px ;margin:0 auto;"/> </li>
+<li><input type="button" data-i18n="[value]resources.btn_horizontalCenter" onclick="setSymbolAlighHorizontalcenter()" style="width:70px;height: 25px ;margin:0 auto;"/> </li>
+</ul>
+</li>
+<li>
+<a class="glyphicon glyphicon-adjust notArrow" data-i18n="[title]resources.text_avoid"></a>
+<ul>
+<li><input type="button" data-i18n="[value]resources.btn_avoidEdit" onclick="drawAvoidRegion()" style="width:80px;height: 25px ;margin:0 auto;"/> </li>
+<li><input type="button" data-i18n="[value]resources.btn_cancelAvoidEdit" onclick="doneAvoidEdit()" style="width:80px;height: 25px ;margin:0 auto;"/> </li>
+<li><input type="button" data-i18n="[value]resources.btn_deleteAvoid" onclick="deleteAvoidEdit()" style="width:80px;height: 25px ;margin:0 auto;"/> </li>
+</ul>
+</li>
+<li>
+<a class="glyphicon glyphicon-gift notArrow" data-i18n="[title]resources.text_createGroup"></a>
+<ul>
+<li><input type="button" data-i18n="[value]resources.btn_group" onclick="createGroupObjects()" style="width:70px;height: 25px ;margin:0 auto;"/> </li>
+<li><input type="button" data-i18n="[value]resources.btn_flags" onclick="createDrawFlags()" style="width:70px;height: 25px ;margin:0 auto;"/> </li>
+<li><input type="button" data-i18n="[value]resources.btn_unbundling" onclick="testUnGroupObject()" style="width:70px;height: 25px ;margin:0 auto;"/> </li>
+</ul>
+</li>
+<li>
+<a class="glyphicon glyphicon-arrow-left notArrow" data-i18n="[title]resources.btn_undo" onclick="undo()"></a>
+</li>
+<li>
+<a class="glyphicon glyphicon-arrow-right notArrow" data-i18n="[title]resources.btn_redo" onclick="redo()"></a>
+</li>
+<li>
+<a class="glyphicon glyphicon-th-large notArrow" data-i18n="[title]resources.text_symbolEqualSize"></a>
+<ul>
+<li><input type="button" data-i18n="[value]resources.btn_symbolEqualWidth" onclick="setSymbolEqualWidth()" style="width:70px;height: 25px ;margin:0 auto;"> </input> </li>
+<li><input type="button" data-i18n="[value]resources.btn_symbolEqualHeight" onclick="setSymbolEqualHeight()" style="width: 70px;height: 25px ;margin:0 auto;"> </input></li>
+<li><input type="button" data-i18n="[value]resources.btn_symbolEqualWidthHeight" onclick="setSymbolEqualWidthHeight()" style="width:70px;height: 25px ;margin:0 auto;"> </input> </li>
+</ul>
+</li>
+<li>
+<a class="glyphicon glyphicon-th" data-i18n="[title]resources.text_symbolDistribution"></a>
+<ul>
+<li><input type="button" data-i18n="[value]resources.btn_symbolLevelDistribution" onclick="setSymbolLevelDistribution()" style="width:70px;height: 25px ;margin:0 auto;"> </input> </li>
+<li><input type="button" data-i18n="[value]resources.btn_symbolVerticalDistribution" onclick="setSymbolVerticalDistribution()" style="width: 70px;height: 25px ;margin:0 auto;"> </input></li>
+</ul>
+</li>
+</div>
+</div>
+<script type="text/javascript" include="bootstrap,responsive,sticklr" src="../js/include-web.js"></script>
+<script type="text/javascript" exclude="iclient-classic" include="iclient8c-plot,bevInclude,PlottingPanel" src="../../dist/classic/include-classic.js"></script>
+<script>
+    var map, plottingLayer, layer;
+    var plotPanel, stylePanel;
+    var host = window.isLocal ? window.server : "https://iserver.supermap.io";
+    var mapurl = host + "/iserver/services/map-china400/rest/maps/China_4326";
+    var serverUrl = host + "/iserver/services/plot-jingyong/rest/plot/";
+    var plotting;
+    var sitDataLayers;
+    var drawGraphicObjects = [];
+    var plottingEdit;
+    init();
+
+    function init() {
+        Bev.Theme.set("bev-base");
+
+        map = new SuperMap.Map("map", {
+            controls: [
+                new SuperMap.Control.LayerSwitcher(),
+                new SuperMap.Control.ScaleLine(),
+                new SuperMap.Control.Zoom(),
+                new SuperMap.Control.Navigation({
+                    dragPanOptions: {
+                        enableKinetic: true
+                    }
+                })]
+        });
+        layer = new SuperMap.Layer.TiledDynamicRESTLayer("World", mapurl, {
+            transparent: true,
+            cacheEnabled: true
+        }, {maxResolution: "auto"});
+        layer.events.on({"layerInitialized": addLayer});
+
+        //总控类
+        plotting = SuperMap.Plotting.getInstance(map, serverUrl);
+
+        plotting.getSitDataManager().events.on({"openSmlFileCompleted": success});
+
+        plottingLayer = new SuperMap.Layer.PlottingLayer("标绘图层", serverUrl);
+
+        //空间分析服务地址：目前使用的是服务器默认空间分析地址，可更换成实际使用的空间分析服务地址
+        //plottingLayer.spatialAnalystUrl = host + "/iserver/services/spatialanalyst-sample/restjsr/spatialanalyst";
+
+        plottingLayer.style = {
+            fillColor: "#66cccc",
+            fillOpacity: 0.4,
+            strokeColor: "#66cccc",
+            strokeOpacity: 1,
+            strokeWidth: 3,
+            pointRadius: 6
+        };
+
+        //态势标绘编辑
+        plottingEdit = new SuperMap.Control.PlottingEdit();
+        //plottingEdits.push(plottingEdit);
+
+        // 绘制标号;
+        var drawGraphicObject = new SuperMap.Control.DrawFeature(plottingLayer, SuperMap.Handler.GraphicObject);
+        drawGraphicObjects.push(drawGraphicObject);
+
+        //添加态势标绘控件
+        map.addControls([plottingEdit, drawGraphicObject]);
+    }
+
+    function addLayer() {
+        map.addLayers([layer, plottingLayer]);
+        map.setCenter(new SuperMap.LonLat(104, 35), 3);
+
+        //创建标绘面板
+        plotPanel = new SuperMap.Plotting.PlotPanel("plotPanel", serverUrl, map);
+        plotPanel.events.on({"initializeCompleted": initializeCompleted});
+        plotPanel.initializeAsync();
+
+        //创建属性面板
+        stylePanel = new SuperMap.Plotting.StylePanel("stylePanel");
+        stylePanel.addEditLayer(plottingLayer);
+    }
+
+    function initializeCompleted(evt) {
+        if (drawGraphicObjects.length > 0) {
+            plotPanel.setDrawFeature(drawGraphicObjects[0]);
+        }
+
+        plotting.getSymbolLibManager().cacheSymbolLib(100);
+    }
+
+    //取消标绘与编辑
+    function plottingAllDeactivate() {
+        for (var i = 0; i < drawGraphicObjects.length; i++) {
+            drawGraphicObjects[i].deactivate();
+        }
+        plottingEdit.deactivate();
+    }
+
+    //清空绘制
+    function PlottingClear() {
+
+        plottingAllDeactivate();
+
+        for (var i = 0; i < map.layers.length; i++) {
+            if (map.layers[i].CLASS_NAME === "SuperMap.Layer.PlottingLayer") {
+                map.layers[i].removeAllFeatures();
+            }
+        }
+    }
+
+    //删除选中标号
+    function deleteSymbol() {
+        plottingEdit.deleteSelectFeature();
+    }
+
+    //取消标绘，激活标绘编辑控件
+    function PlottingDrawCancel() {
+        plottingAllDeactivate();
+
+        plottingEdit.activate();
+
+    }
+
+    //复制
+    function copySymbol() {
+        plotting.getEditor().copy();
+    }
+
+    //剪切
+    function cutSymbol() {
+        plotting.getEditor().cut();
+    }
+
+    //粘贴
+    function pasteSymbol() {
+        plotting.getEditor().paste();
+    }
+
+    //添加图层
+    function addPlottingLayer() {
+        PlottingDrawCancel();
+        var newPlottingLayer = new SuperMap.Layer.PlottingLayer(getNewPlottingLayerName(), serverUrl);
+        newPlottingLayer.style = {
+            fillColor: "#66cccc",
+            fillOpacity: 0.4,
+            strokeColor: "#66cccc",
+            strokeOpacity: 1,
+            strokeWidth: 3,
+            pointRadius: 6
+        };
+
+        //newPlottingLayer.spatialAnalystUrl = host + "/iserver/services/spatialanalyst-sample/restjsr/spatialanalyst";
+
+        var drawGraphicObject = new SuperMap.Control.DrawFeature(newPlottingLayer, SuperMap.Handler.GraphicObject);
+        drawGraphicObjects.push(drawGraphicObject);
+
+        //将新创建的图层添加到属性面板中
+        stylePanel.addEditLayer(newPlottingLayer);
+
+        //将标绘句柄赋给标绘面板
+        plotPanel.setDrawFeature(drawGraphicObject);
+
+        map.addControls([drawGraphicObject]);
+        map.addLayers([newPlottingLayer]);
+    }
+
+    //保存态势图
+    function saveSimulationMap() {
+        plottingAllDeactivate();
+        plotting.getSitDataManager().saveAsSmlFile("situationMap");
+    }
+
+    function loadSimulationMap() {
+        {
+            plotting.getSitDataManager().openSmlFileOnServer("situationMap");
+        }
+
+    }
+
+    function success() {
+        var sitDataLayers = plotting.getSitDataManager().getSitDataLayers();
+        plottingLayer = sitDataLayers[0];
+        drawGraphicObjects = [];
+        for (var i = 0; i < sitDataLayers.length; i++) {
+            drawGraphicObjects.push(sitDataLayers[i].drawGraphicObject);
+            stylePanel.addEditLayer(sitDataLayers[i]);
+        }
+        plotPanel.setDrawFeature(drawGraphicObjects[0]);
+    }
+
+    function getNewPlottingLayerName() {
+        var layerCount = map.layers.length;
+        var layerName = "新建标绘图层";
+
+        var bExist = true;
+        while (bExist) {
+            bExist = false;
+            var tempLayerName = layerName + layerCount;
+
+            for (var i = 0; i < map.layers.length; i++) {
+                var layer = map.layers[i];
+                if (null == layer) {
+                    continue;
+                }
+
+                if (tempLayerName === layer.name) {
+                    bExist = true;
+                }
+            }
+
+            if (!bExist) {
+                layerName = tempLayerName;
+            }
+            layerCount++;
+        }
+
+        return layerName;
+    }
+
+    function editCircusRetangle() {
+        plottingEdit.setEditMode(SuperMap.Plot.EditMode.EDITCIRCUMRECTANGLE);
+    }
+
+    function editContorPoints() {
+        plottingEdit.setEditMode(SuperMap.Plot.EditMode.EDITCONTROLPOINT);
+    }
+
+    function addControlPoints() {
+        plottingEdit.setEditMode(SuperMap.Plot.EditMode.ADDCONTROLPOINT);
+    }
+
+    //切换多选模式
+    function multiSelectModel() {
+        plottingEdit.multiSelect();
+    }
+
+    //多选对齐--左对齐
+    function setSymbolAlighLeft() {
+        plottingEdit.align(SuperMap.Plot.AlignType.LEFT);
+    }
+
+    //多选对齐--右对齐
+    function setSymbolAlighRight() {
+        plottingEdit.align(SuperMap.Plot.AlignType.RIGHT);
+    }
+
+    //多选对齐--上对齐
+    function setSymbolAlighUp() {
+        plottingEdit.align(SuperMap.Plot.AlignType.UP);
+    }
+
+    //多选对齐--下对齐
+    function setSymbolAlighDown() {
+        plottingEdit.align(SuperMap.Plot.AlignType.DOWN);
+    }
+
+    //多选对齐--竖直居中对齐
+    function setSymbolAlighVerticalcenter() {
+        plottingEdit.align(SuperMap.Plot.AlignType.VERTICALCENTER);
+    }
+
+    //多选对齐--水平居中对齐
+    function setSymbolAlighHorizontalcenter() {
+        plottingEdit.align(SuperMap.Plot.AlignType.HORIZONTALCENTER);
+    }
+
+    //切换图层是否锁定
+    function setPlottingLayerIsLocked() {
+        if (plottingLayer.getLocked() === true) {
+            plottingLayer.setLocked(false);
+        } else {
+            plottingLayer.setLocked(true);
+        }
+    }
+
+    //切换图层是否可编辑模式
+    function setPlottingLayerIsEdit() {
+        if (plottingLayer.getEditable() === true) {
+            plottingLayer.setEditable(false);
+        } else {
+            plottingLayer.setEditable(true);
+        }
+    }
+
+    //切换图层是否可选择模式
+    function setPlottingLayerIsSelected() {
+        if (plottingLayer.getSelected() === true) {
+            plottingLayer.setSelected(false);
+        } else {
+            plottingLayer.setSelected(true);
+        }
+    }
+
+    //绘制避让区域
+    function drawAvoidRegion() {
+        plottingEdit.avoidEdit(true);
+    }
+
+    //退出避让编辑
+    function doneAvoidEdit() {
+        plottingEdit.avoidEdit(false);
+    }
+
+    //删除避让编辑
+    function deleteAvoidEdit() {
+        plottingEdit.removeAllAvoidRegion();
+    }
+
+    //创建组合对象
+    function createGroupObjects() {
+        var features = plottingEdit.features;
+        if (features.length >= 2) {
+            plottingLayer.createGroupObject(features);
+        }
+
+    }
+
+    //创建多旗
+    function createDrawFlags() {
+        var features = plottingEdit.features;
+        if (features.length >= 2) {
+            plottingLayer.createFlags(features);
+        }
+    }
+
+    //解绑组合对象
+    function testUnGroupObject() {
+        var features = plottingEdit.features;
+        for (var i = features.length - 1; i >= 0; i--) {
+            if (features[i].geometry instanceof SuperMap.Geometry.GroupObject) {
+                plottingLayer.unGroupObject(features[i].geometry.uuid);
+            }
+
+        }
+    }
+
+    function undo(){
+        plotting.getTransManager().undo();
+    }
+
+    function redo(){
+        plotting.getTransManager().redo();
+    }
+    //等大
+    //等宽
+    function setSymbolEqualWidth(){
+        plottingEdit.equalLarge(SuperMap.Plot.EqualLargeType.WIDTH);
+    }
+    //等高
+    function setSymbolEqualHeight(){
+        plottingEdit.equalLarge(SuperMap.Plot.EqualLargeType.HEIGHT);
+    }
+    //等宽高
+    function setSymbolEqualWidthHeight(){
+        plottingEdit.equalLarge(SuperMap.Plot.EqualLargeType.SAME);
+    }
+
+    //均匀分布
+    //横向均匀分布
+    function setSymbolLevelDistribution(){
+        plottingEdit.uniformDistribution(SuperMap.Plot.UniformDistributionType.LEVEL);
+    }
+
+    //纵向均匀分布
+    function setSymbolVerticalDistribution(){
+        plottingEdit.uniformDistribution(SuperMap.Plot.UniformDistributionType.VERTICAL);
+    }
+
+    document.onmouseup = function (evt) {
+        var evt = evt || window.event;
+        if (evt.button === 2) {
+            PlottingDrawCancel();
+            return false;
+        }
+        evt.stopPropagation();
+    }
+</script>
+</body>
+</html>
+```
+
+
+
+　　Pc端将“一标三实”与实景三维数据相融合，实现三维场景中的房屋管理、人口管理、报表导出功能、视频监控管理等功能;移动端实现移动巡查、越界报警、信息上报等功能。
+
+![img](https://www.supermap.com/zh-cn/upLoad/case/2101041354407683363.png)![img](https://www.supermap.com/zh-cn/upLoad/case/2101041355329104857.png)![img](https://www.supermap.com/zh-cn/upLoad/case/2101041357553440443.png)
+
+
+
