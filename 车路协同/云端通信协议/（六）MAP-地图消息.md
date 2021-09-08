@@ -1445,7 +1445,7 @@
 
 ## 2.1 timeStamp	MinuteOfTheYear OPTIONAL时间戳
 
-```json
+```ASN.1
 【定义】
 数值用来表示当前年份，已经过去的总分钟数（UTC 时间）。分辨率为1 分钟。该数值配合
 DSecond 数值，则可表示全年已过去的总毫秒数。
@@ -1456,7 +1456,7 @@ MinuteOfTheYear ::= INTEGER (0..527040)
 
 ## 2.2 msgCnt	MsgCount 消息计数
 
-```json
+```ASN.1
 【定义】 
 发送方为自己发送的同类消息，依次进行编号。编号数值为 0 ～ 127。 
 当发送方开始发起某一类数据时，它可以随机选择起始编号，随后依次递增。发送方也可以在连续发送相同的数据帧时，选择使用相同的 MsgCount 消息编号。编号到达 127 后，则下一个回到 0。 
@@ -1486,7 +1486,7 @@ MsgCount ::= INTEGER (0..127)
 节点属性包括名称、ID、位置以及与<font color='red'>节点相连的上游路段集合。 </font>
 <font color='red'>节点数据帧中包含的路段列表，均以该节点作为下游端点。而以该节点为上游端点的路段，则归属于该路段下游节点的数据帧。 </font>
 
-```json
+```ASN.1
 【ASN.1 代码】 
 Node ::= SEQUENCE { 
 -- Node can be an intersection, or a road endpoint 
@@ -1511,7 +1511,7 @@ inLinks LinkList OPTIONAL,
 
 #### 1. name DescriptiveName名称
 
-```json
+```ASN.1
 【定义】 
 定义名称字符串类型。 
 【ASN.1 代码】 
@@ -1520,7 +1520,7 @@ DescriptiveName ::= IA5String (SIZE(1..63))
 
 #### 2. id NodeID节点编号
 
-```json
+```ASN.1
 【定义】 
 定义节点 ID。路网最基本的构成即节点和连接节点的路段。节点可以是路口，也可以是一条 
 路的端点。一个节点的 ID 在同一个区域内是唯一的。数值 0 ～ 255 预留为测试使用。 
@@ -1533,7 +1533,7 @@ NodeID ::= INTEGER (0..65535)
 
 #### 3. refPos（3D） reference position（Position3D）参考位置
 
-```json
+```ASN.1
 【定义】
 三维的坐标位置，包括经纬度和高程。
 【ASN.1 代码】
@@ -1549,7 +1549,7 @@ elevation Elevation OPTIONAL
 
 - lat Latitude纬度
 
-```json
+```ASN.1
 【定义】
 定义纬度数值，北纬为正，南纬为负。分辨率1e-7°。
 【ASN.1 代码】
@@ -1560,7 +1560,7 @@ Latitude:= INTEGER(-900000.9000001)
 
 - long Longitude经度
 
-```json
+```ASN.1
 【定义】
 定义经度数值。东经为正，西经为负。分辨率为1e-7°。
 【ASN.1 代码】
@@ -1571,7 +1571,7 @@ Longitude ::= INTEGER(-17999999..180000001)
 
 - elevation Elevation OPTIONAL 海拔
 
-```json
+```ASN.1
 【定义】
 定义车辆海拔高程。分辨率为0.1米。数值-4096 表示无效数值。【ASN.1 代码】
 Elevation ::= INTEGER (-4096..61439)
@@ -1586,7 +1586,7 @@ Seq.of Link sequence of Link	链接序列
 
 #### 1. name DescriptiveName名称
 
-```json
+```ASN.1
 【定义】 
 定义名称字符串类型。 
 【ASN.1 代码】 
@@ -1595,7 +1595,7 @@ DescriptiveName ::= IA5String (SIZE(1..63))
 
 #### 2. upstreamNodeId上行节点编号
 
-```json
+```ASN.1
 【定义】 
 定义路段或车道的限速列表。 
 【ASN.1 代码】 
@@ -1604,7 +1604,7 @@ SpeedLimitList ::= SEQUENCE (SIZE(1..9)) OF RegulatorySpeedLimit
 
 - RegulatorySpeedLimit限速属性
 
-```json
+```ASN.1
 【定义】
 定义限速属性。包括限速类型以及所规定的限速值。
 【ASN.1 代码】
@@ -1621,7 +1621,7 @@ speed Speed
 
 - -  type SpeedLimitType限速类型
 
-  ```json
+  ```ASN.1
   【定义】
   定义限速类型，指示给出的限速大小对应的参考类型。
   【ASN.1代码】
@@ -1646,7 +1646,7 @@ speed Speed
 
   - speed Speed车速
 
-  - ```json
+  - ```ASN.1
     【定义】
     车速大小。分辨率为0.02m/s。数值8191表示无效数值。
     【ASN.1 代码】
@@ -1660,7 +1660,7 @@ speed Speed
 
 #### 3. laneWidth车道宽度
 
-```json
+```ASN.1
 【定义】
 定义车道宽度。分辨率为1cm。
 【ASN.1 代码】
@@ -1668,13 +1668,11 @@ LaneWidth= INTEGER(0..32767)
 -- units of 1 cm
 ```
 
-#### 4. lanes车道
+#### Seq.of Lane sequence of lane 车道系列
 
-Seq.of Lane sequence of lane道路顺序
+##### 1. laneID车道编号
 
-##### laneID车道编号
-
-```json
+```ASN.1
 【定义】
 定义车道ID。每一条有向路段上的每个车道，都拥有一个单独的ID。数值0表示无效ID。
 【ASN.1 代码】
@@ -1684,9 +1682,9 @@ LaneID ::= INTEGER (0..255) 
 -- the value 255 is reserved for future use
 ```
 
-##### laneAttributes车道属性
+##### 2. laneAttributes车道属性
 
-```json
+```ASN.1
 【定义】
 定义车道属性。包括车道共享情况以及车道本身所属的类别特性。
 【ASN.1代码】
@@ -1698,7 +1696,7 @@ laneType LaneTypeAttributes
 
 - sharewith LaneSharing车道被共享情况
 
-```json
+```ASN.1
 【定义】
 定义车道被共享的情况。在已有的车道属性定义基础上，该数据表示此车道还会有其他的交通参与者者出现，并可能拥有相同的路权。数据每一个比特位，如果是"1"，则表示对应的车道共享属性生效。
 【ASN.1 代码】
@@ -1728,7 +1726,7 @@ pedestrianTraffic (9)
 
 - laneType LaneTypeAttributes车道属性
 
-```json
+```ASN.1
 【定义】
 定义不同类别车道的属性集合。
 【ASN.1 代码】
@@ -1745,9 +1743,9 @@ parking LaneAttributes-Parking,-- parking and stopping lanes
 }
 ```
 
-##### maneuvers AllowedManeuvers允许转向行为
+##### 3. maneuvers AllowedManeuvers允许转向行为
 
-```json
+```ASN.1
 【定义】 
 定义一个（机动车）车道的允许转向行为。 
 【ASN.1 代码】 
@@ -1789,9 +1787,9 @@ reserved1 (11)
 } (SIZE(12))
 ```
 
-##### connectsTo ConnectsToList连接关系列表
+##### 4. connectsTo ConnectsToList连接关系列表
 
-```json
+```ASN.1
 【定义】 
 定义路段中每条车道在下游路口处与下游路段车道的转向连接关系列表。 
 【ASN.1 代码】 
@@ -1800,7 +1798,7 @@ ConnectsToList ::= SEQUENCE (SIZE(1..8)) OF Connection
 
 Seq.of Connection sequence of connection 车道与下游路段车道的连接关系序列
 
-```json
+```ASN.1
 【定义）
 定义车道与下游路段车道的连接关系。包括下游路段出口节点ID、连接的下游路段车道基本信息以及对应的信号灯相位号。在车道连接中定义的相位号，是对 DF_Movement中定义转向的相位号的一个补充。当某一些车道在转向时需要参考一些特殊的信号灯相位（而不是 DF_Movement中定义的默认相位），则应该将其定义在本数据帧中。
 【ASN.1 代码】 
@@ -1825,7 +1823,7 @@ phaseld PhaseID OPTIONAL
 
 - remotelntersection NodeReferenceID参考ID
 
-- ```json
+- ```ASN.1
   【定义】
   定义参考ID。参考ID由一个全局唯一的地区ID和一个地区内部唯一的节点D组成。
   【ASN.1 代码】
@@ -1844,7 +1842,7 @@ phaseld PhaseID OPTIONAL
 
 - - region RoadRegulatorID OPTIONAL地图中各个划分区域的ID号
 
-  - ```json
+  - ```ASN.1
     【定义】
     定义地图中各个划分区域的ID号。数值0仅用于测试。
     【ASN.1 代码】
@@ -1854,7 +1852,7 @@ phaseld PhaseID OPTIONAL
 
   - id NodeID节点ID
 
-  - ```json
+  - ```ASN.1
     【定义】
     定义节点ID。路网最基本的构成即节点和连接节点的路段。节点可以是路口，也可以是一条路的端点。一个节点的ID在同一个区域内是唯一的。数值0～255 预留为测试使用。
     【ASN.1 代码】
@@ -1866,7 +1864,7 @@ phaseld PhaseID OPTIONAL
 
 - connectingLane ConnectingLane OPTIONAL连接车道
 
-- ```json
+- ```ASN.1
   【定义】
   用于定位上游车道转向连接的下游车道，包括车道ID以及该转向的允许行驶行为。这里，下游车道 ID 的作用范围是其所在的路段。
   【ASN.1 代码】
@@ -1884,7 +1882,7 @@ phaseld PhaseID OPTIONAL
 
 - - lane LaneID车道ID
 
-  - ```json
+  - ```ASN.1
     【定义】
     定义车道ID。每一条有向路段上的每个车道，都拥有一个单独的ID。数值0表示无效ID。
     【ASN.1 代码】
@@ -1896,7 +1894,7 @@ phaseld PhaseID OPTIONAL
 
   - maneuver AllowedManeuvers OPTIONAL车道的允许转向行为
 
-  - ```json
+  - ```ASN.1
     【定义】
     定义一个（机动车）车道的允许转向行为。
     【ASN.1 代码】
@@ -1940,7 +1938,7 @@ phaseld PhaseID OPTIONAL
 
 - phaseId相位 ID
 
-- ```json
+- ```ASN.1
   【定义】
   定义信号灯相位 ID。数值o表示无效ID。
   【ASN.1 代码】
@@ -1950,9 +1948,9 @@ phaseld PhaseID OPTIONAL
 
 
 
-##### points PointList点
+##### 5. points PointList点
 
-```json
+```ASN.1
 【定义】 
 定义一个有向路段上的中间位置点列表，用来表达路段上截面或片段的特殊属性。列表中所有 
 位置点需按上游至下游顺序排列。 
@@ -1968,7 +1966,7 @@ PointList ::= SEQUENCE (SIZE(2..31)) OF RoadPoint
 
 Seq.of RoadPoint sequence of roadpoint整道路上标记的一个位置点属性序列
 
-```json
+```ASN.1
 【定义】
 表示完整道路上标记的一个位置点属性。包括相对位置、位置点处路段截面的特殊属性集合，以及该位置点到下游相邻位置点之间局部路段的特殊属性集合。如果位置点为路段最下游的点，则其包含的下游截取路段属性为无效数据。
 【ASN.1 代码】 
@@ -1979,11 +1977,9 @@ posOffset PositionOffsetLLV,
 }
 ```
 
+##### 6. speedLimits SpeedLimitList 速度限制
 
-
-##### speedLimits SpeedLimitList 速度限制
-
-```json
+```ASN.1
 【定义】 
 定义路段或车道的限速列表。 
 【ASN.1 代码】 
@@ -1992,7 +1988,7 @@ SpeedLimitList ::= SEQUENCE (SIZE(1..9)) OF RegulatorySpeedLimit
 
 RegulatorySpeedLimit限速属性
 
-```json
+```ASN.1
 【定义】
 定义限速属性。包括限速类型以及所规定的限速值。
 【ASN.1 代码】
@@ -2008,7 +2004,7 @@ speed Speed
 
 - type SpeedLimitType限速类型
 
-- ```json
+- ```ASN.1
   【定义】
   定义限速类型，指示给出的限速大小对应的参考类型。
   【ASN.1代码】
@@ -2033,7 +2029,7 @@ speed Speed
 
 - speed Speed车速
 
-- ```json
+- ```ASN.1
   【定义】
   车速大小。分辨率为0.02m/s。数值8191表示无效数值。
   【ASN.1 代码】
@@ -2047,7 +2043,7 @@ speed Speed
 
 ### points PointList点
 
-```json
+```ASN.1
 【定义】 
 定义一个有向路段上的中间位置点列表，用来表达路段上截面或片段的特殊属性。列表中所有 
 位置点需按上游至下游顺序排列。 
@@ -2061,7 +2057,7 @@ PointList ::= SEQUENCE (SIZE(2..31)) OF RoadPoint
 
 seq of RoadPoint完整道路上标记的一个位置点属性
 
-```json
+```ASN.1
 【定义】
 表示完整道路上标记的一个位置点属性。包括相对位置、位置点处路段截面的特殊属性集合，以及该位置点到下游相邻位置点之间局部路段的特殊属性集合。如果位置点为路段最下游的点，则其包含的下游截取路段属性为无效数据。
 【ASN.1 代码】
@@ -2076,7 +2072,7 @@ posOffset PositionOffsetLLV,
 
 ### Movements移动
 
-```json
+```ASN.1
 【定义】
 描述道路与下游路段的连接关系，以及该连接对应的本地路口处信号灯相位ID。此处的相位 ID事实上也是MAP消息与SPAT消息的唯一关联。车辆在确定转向行为后，能够通过该相位ID数据，查看到SPAT中对应的相位实时状态，从而获得行车过程中的信号灯数据辅助。 
 【ASN.1 代码】
@@ -2097,7 +2093,7 @@ Seq.of Movements sequence of movements移动序列
 
 - remotelntersection NodeReferenceID参考ID
 
-- ```json
+- ```ASN.1
   【定义】
   定义参考ID。参考ID由一个全局唯一的地区ID和一个地区内部唯一的节点D组成。
   【ASN.1 代码】
@@ -2115,7 +2111,7 @@ Seq.of Movements sequence of movements移动序列
 
 - - region RoadRegulatorID OPTIONAL地图中各个划分区域的ID号
 
-  - ```json
+  - ```ASN.1
     【定义】
     定义地图中各个划分区域的ID号。数值0仅用于测试。
     【ASN.1 代码】
@@ -2125,7 +2121,7 @@ Seq.of Movements sequence of movements移动序列
 
   - id NodeID节点ID
 
-  - ```json
+  - ```ASN.1
     【定义】
     定义节点ID。路网最基本的构成即节点和连接节点的路段。节点可以是路口，也可以是一条路的端点。一个节点的ID在同一个区域内是唯一的。数值0～255 预留为测试使用。
     【ASN.1 代码】
@@ -2137,7 +2133,7 @@ Seq.of Movements sequence of movements移动序列
 
 - phaseId相位 ID
 
-- ```json
+- ```ASN.1
   【定义】
   定义信号灯相位 ID。数值o表示无效ID。
   【ASN.1 代码】
@@ -2149,7 +2145,7 @@ Seq.of Movements sequence of movements移动序列
 
 ### lanes LaneList
 
-```json
+```ASN.1
 【定义】
 定义一个路段中包含的车道列表。
 【ASN.1 代码】
@@ -2158,7 +2154,7 @@ LaneList ::= SEQUENCE(SIZE1..32)OFLane
 
 Seq.of Lane sequence of lane道路序列
 
-```json
+```ASN.1
 【定义】 
 定义车道。包含其 ID、共享属性、车道出口的允许转向行为、车道与下游路段车道的连接关 
 系列表，以及车道中间点列表。 
@@ -2183,7 +2179,7 @@ points PointList OPTIONAL,
 
 - laneID车道编号
 
-```json
+```ASN.1
 【定义】
 定义车道ID。每一条有向路段上的每个车道，都拥有一个单独的ID。数值0表示无效ID。
 【ASN.1 代码】
@@ -2195,7 +2191,7 @@ LaneID ::= INTEGER (0..255)
 
 - laneAttributes车道属性
 
-```json
+```ASN.1
 【定义】
 定义车道属性。包括车道共享情况以及车道本身所属的类别特性。
 【ASN.1代码】
@@ -2207,7 +2203,7 @@ laneType LaneTypeAttributes
 
 - - sharewith LaneSharing车道被共享情况
 
-  - ```json
+  - ```ASN.1
     【定义】
     定义车道被共享的情况。在已有的车道属性定义基础上，该数据表示此车道还会有其他的交通参与者者出现，并可能拥有相同的路权。数据每一个比特位，如果是"1"，则表示对应的车道共享属性生效。
     【ASN.1 代码】
@@ -2238,7 +2234,7 @@ laneType LaneTypeAttributes
 
   - laneType LaneTypeAttributes车道属性
 
-  - ```json
+  - ```ASN.1
     【定义】
     定义不同类别车道的属性集合。
     【ASN.1 代码】
@@ -2257,7 +2253,7 @@ laneType LaneTypeAttributes
 
 - maneuvers AllowedManeuvers允许转向行为
 
-- ```json
+- ```ASN.1
   【定义】 
   定义一个（机动车）车道的允许转向行为。 
   【ASN.1 代码】 
@@ -2301,7 +2297,7 @@ laneType LaneTypeAttributes
 
 - connectsTo ConnectsToList连接关系列表
 
-- ```json
+- ```ASN.1
   【定义】 
   定义路段中每条车道在下游路口处与下游路段车道的转向连接关系列表。 
   【ASN.1 代码】 
@@ -2310,7 +2306,7 @@ laneType LaneTypeAttributes
 
 - - Seq.of Connection sequence of connection 车道与下游路段车道的连接关系序列
 
-  - ```json
+  - ```ASN.1
     【定义）
     定义车道与下游路段车道的连接关系。包括下游路段出口节点ID、连接的下游路段车道基本信息以及对应的信号灯相位号。在车道连接中定义的相位号，是对 DF_Movement中定义转向的相位号的一个补充。当某一些车道在转向时需要参考一些特殊的信号灯相位（而不是 DF_Movement中定义的默认相位），则应该将其定义在本数据帧中。
     【ASN.1 代码】 
@@ -2336,7 +2332,7 @@ laneType LaneTypeAttributes
 
   remotelntersection NodeReferenceID参考ID
 
-  ```json
+  ```ASN.1
   【定义】
   定义参考ID。参考ID由一个全局唯一的地区ID和一个地区内部唯一的节点D组成。
   【ASN.1 代码】
@@ -2355,7 +2351,7 @@ laneType LaneTypeAttributes
 
   region RoadRegulatorID OPTIONAL地图中各个划分区域的ID号
 
-  ```json
+  ```ASN.1
   【定义】
   定义地图中各个划分区域的ID号。数值0仅用于测试。
   【ASN.1 代码】
@@ -2365,7 +2361,7 @@ laneType LaneTypeAttributes
 
   id NodeID节点ID
 
-  ```json
+  ```ASN.1
   【定义】
   定义节点ID。路网最基本的构成即节点和连接节点的路段。节点可以是路口，也可以是一条路的端点。一个节点的ID在同一个区域内是唯一的。数值0～255 预留为测试使用。
   【ASN.1 代码】
@@ -2377,7 +2373,7 @@ laneType LaneTypeAttributes
 
   connectingLane ConnectingLane OPTIONAL连接车道
 
-  ```json
+  ```ASN.1
   【定义】
   用于定位上游车道转向连接的下游车道，包括车道ID以及该转向的允许行驶行为。这里，下游车道 ID 的作用范围是其所在的路段。
   【ASN.1 代码】
@@ -2394,7 +2390,7 @@ laneType LaneTypeAttributes
 
   lane LaneID车道ID
 
-  ```json
+  ```ASN.1
   【定义】
   定义车道ID。每一条有向路段上的每个车道，都拥有一个单独的ID。数值0表示无效ID。
   【ASN.1 代码】
@@ -2406,7 +2402,7 @@ laneType LaneTypeAttributes
 
   maneuver AllowedManeuvers OPTIONAL车道的允许转向行为
 
-  ```json
+  ```ASN.1
   【定义】
   定义一个（机动车）车道的允许转向行为。
   【ASN.1 代码】
@@ -2448,11 +2444,10 @@ laneType LaneTypeAttributes
   } (SIZE(12))
   ```
 
-  
 
 phaseId相位 ID
 
-```json
+```ASN.1
 【定义】
 定义信号灯相位 ID。数值o表示无效ID。
 【ASN.1 代码】
