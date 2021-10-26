@@ -1,7 +1,5 @@
 - [V2X车路协同云控数据平台业务整理](https://blog.csdn.net/a1290123825/article/details/116524479)
 
-
-
 V2X即Vehicle-to-Everything，是智能汽车和智能交通的支撑技术之一；首先我们要明确梳理该篇文章能够达到哪些目标？清楚【V2X车路协同云控数据平台】是做什么的？为什么需要？如何去做?（wwh的问题what\why\how)肯定是必选项；
 
 其次我们还要清楚需要解决的核心问题有哪些:
@@ -21,8 +19,6 @@ v2x主要包含vehicle-to-vehicle (V2V)， vehicle-to-infrastructure (V2I)， ve
 - 车车通信能够计算车辆之间的距离，不需要使用雷达等；
 - 车路通信能够实现车辆在交叉路口与路侧设备以及信号灯的感知，那么车辆的摄像头可以减少一些；
 - 车人通信能够让车辆知道行人在哪里，是否有可能产生碰撞等，同样可以减少雷达和摄像头的使用； 
-
-![img](https://img-blog.csdnimg.cn/20210508223513610.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ExMjkwMTIzODI1,size_16,color_FFFFFF,t_70)
 
 要全面实现V2X是及其困难的一件事
 
