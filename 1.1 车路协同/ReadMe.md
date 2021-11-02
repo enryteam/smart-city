@@ -4,7 +4,7 @@
 
 更多车路协同，车路协同建设解决方案，参考链接：https://gitee.com/AiShiYuShiJiePingXing/smart-city
 
-个人网站：https://www.lovebetterworld.com/
+- 个人网站：https://www.lovebetterworld.com/
 
 - QQ：1090239782
 - 微信：lovebetterworld
