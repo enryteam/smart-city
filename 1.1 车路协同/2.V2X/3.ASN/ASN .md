@@ -1,14 +1,8 @@
-[TOC]
-
 ASN.1[抽象语法标记](https://baike.baidu.com/item/抽象语法标记/3024369)（Abstract Syntax Notation One） ASN.1是一种 ISO/ITU-T 标准，描述了一种对数据进行表示、[编码](https://baike.baidu.com/item/编码/80092)、传输和解码的数据格式。它提供了一整套正规的格式用于描述对象的结构，而不管语言上如何执行及这些数据的具体指代，也不用去管到底是什么样的应用程序。
-
-
 
 # 一、简介
 
 在任何需要以数字方式发送信息的地方，ASN.1  都可以发送各种形式的信息（声频、视频、数据等等）。ASN.1 和特定的 ASN.1  编码规则推进了结构化数据的传输，尤其是网络中应用程序之间的结构化数据传输，它以一种独立于计算机架构和语言的方式来描述数据结构。
-
-
 
 OSI 协议套中的[应用层协议](https://baike.baidu.com/item/应用层协议/3668945)使用了 ASN.1 来描述它们所传输的 PDU，这些协议包括：用于传输电子邮件的 X.400、用于[目录服务](https://baike.baidu.com/item/目录服务)的 X.500、用于 VoIP 的 H.323 和 SNMP。它的应用还可以扩展到[通用移动通信系统](https://baike.baidu.com/item/通用移动通信系统)（UMTS）中的接入和[非接入层](https://baike.baidu.com/item/非接入层/5876110)。
 
@@ -23,8 +17,6 @@ ASN.1 的描述可以容易地被映射成 C 或 C++ 或 Java 的数据结构，
 同时，ASN.1也是一种用于描述结构化客体的结构和内容的语言。
 
 ![image-20210609091117500](https://gitee.com/AiShiYuShiJiePingXing/img/raw/master/img/image-20210609091117500.png)
-
-
 
 # 二、定义
 
@@ -43,8 +35,6 @@ Report ::= SEQUENCE {
 }
 ```
 
-
-
 在这个例子中，"Report"是由名字类型的信息组成的，而SEQUENCE表示消息是许多[数据单元](https://baike.baidu.com/item/数据单元)构成的，前三个数据单元的类型是OCTET STRING，而最后一个数据类型见下面的ASN.1语法表示它的意义：
 
 ```ASN.1
@@ -55,8 +45,6 @@ Bibliography ::= SEQUENCE {
     year OCTET STRING
 }
 ```
-
-
 
 # 三、数据类型
 
@@ -87,8 +75,6 @@ UNIVERSAL 23-24 时间 类型
 UNIVERSAL 31-... 保留给本建议以外的类型和[国际标准](https://baike.baidu.com/item/国际标准)使用
 ```
 
-
-
 # 四、数据结构
 
 ASN.1 还能够定义如下的数据结构类型：
@@ -98,8 +84,6 @@ ASN.1 还能够定义如下的数据结构类型：
 - 列表 ( SEQUENCE OF )
 
 - 类型选择 ( CHOICE )
-
-
 
 # 五、ASN.1模块定义
 
@@ -138,8 +122,6 @@ java类sun.security.util.DerValue中一下标签
  public final static byte    tag_SetOf = 0x31;
 ```
 
-
-
 java的sun.security.util包中提供的DerInputStrem和DerOutputStream可以用于读写ASN格式。
 
 ```java
@@ -169,3 +151,4 @@ System.out.println(din2.getBigInteger());
 1234567812345678
 123456789123456789
 ```
+

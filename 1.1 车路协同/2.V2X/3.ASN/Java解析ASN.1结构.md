@@ -7,7 +7,7 @@
    如有图片中三种ASN.1结构的数据，要判断是其中的哪一种格式：
    [![在这里插入图片描述](https://img.it610.com/image/info8/1b1db4ec4fc5413dac7d87624a0ee1d2.png)](https://img.it610.com/image/info8/1b1db4ec4fc5413dac7d87624a0ee1d2.png)[![在这里插入图片描述](https://img.it610.com/image/info8/a9185958a3324b1fa344c9b82a9b0f98.png)](https://img.it610.com/image/info8/a9185958a3324b1fa344c9b82a9b0f98.png)[![在这里插入图片描述](https://img.it610.com/image/info8/184e09e4579e442e98cb4a243cd09bce.png)](https://img.it610.com/image/info8/184e09e4579e442e98cb4a243cd09bce.png)
 
-```
+```java
 /**
 	 * 获取sequence下第一个元素，并判断元素类型
 	 * @param data
@@ -136,66 +136,68 @@ public class Asn1Entity extends ASN1Object {
 
 java转ASN.1:
 
-    package com.xdja.timingDemo.asn1;
-     
-    import com.xdja.timingDemo.model.Asn1Entity;
-    import org.bouncycastle.asn1.*;
-     
-    import java.io.IOException;
-    import java.math.BigInteger;
-    import java.util.ArrayList;
-    import java.util.Arrays;
-    import java.util.Date;
-    import java.util.List;
-     
-    public class TestAsn1 {
-     
-        public static List sequence() {
-     
-            Integer id = 1;
-            Boolean status = true;
-            String name = "学习强国";
-     
-            List<String> list = new ArrayList();
-            list.add("ocsp");
-            list.add("asn.1");
-            list.add("java");
-            list.add("base64");
-     
-            ASN1EncodableVector asn1EncodableVector = new ASN1EncodableVector();
-            for (String s : list) {
-                asn1EncodableVector.add(new DERUTF8String(s));
-            }
-            asn1EncodableVector.add(new ASN1Integer(999));
-            asn1EncodableVector.add(new DERUTCTime(new Date()));
-            System.out.println("size:" + asn1EncodableVector.size());
-     
-            //构造函数
-            Asn1Entity asn1Entity = new Asn1Entity(new ASN1Integer(id), new DERUTF8String(name), new DERBoolean(status), new DERSequence(asn1EncodableVector));
-     
-            //asn1Entity 转换byte[]
-            byte[] encode = null;
-            try {
-                encode = asn1Entity.toASN1Primitive().getEncoded();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            System.out.println("encode----------" + Arrays.toString(encode));
-            //byte[]转BASE64
-            byte[] b64 = org.bouncycastle.util.encoders.Base64.encode(encode);
-            System.out.println("base64----------" + Arrays.toString(b64));
-            //b64转换十六进制
-            String str = new BigInteger(1, b64).toString(16);
-            System.out.println("16进制----------" + str);
-                 
-            return null;
+```java
+package com.xdja.timingDemo.asn1;
+ 
+import com.xdja.timingDemo.model.Asn1Entity;
+import org.bouncycastle.asn1.*;
+ 
+import java.io.IOException;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+ 
+public class TestAsn1 {
+ 
+    public static List sequence() {
+ 
+        Integer id = 1;
+        Boolean status = true;
+        String name = "学习强国";
+ 
+        List<String> list = new ArrayList();
+        list.add("ocsp");
+        list.add("asn.1");
+        list.add("java");
+        list.add("base64");
+ 
+        ASN1EncodableVector asn1EncodableVector = new ASN1EncodableVector();
+        for (String s : list) {
+            asn1EncodableVector.add(new DERUTF8String(s));
         }
-     
-        public static void main(String[] args) {
-            TestAsn1.sequence();
-     
+        asn1EncodableVector.add(new ASN1Integer(999));
+        asn1EncodableVector.add(new DERUTCTime(new Date()));
+        System.out.println("size:" + asn1EncodableVector.size());
+ 
+        //构造函数
+        Asn1Entity asn1Entity = new Asn1Entity(new ASN1Integer(id), new DERUTF8String(name), new DERBoolean(status), new DERSequence(asn1EncodableVector));
+ 
+        //asn1Entity 转换byte[]
+        byte[] encode = null;
+        try {
+            encode = asn1Entity.toASN1Primitive().getEncoded();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        System.out.println("encode----------" + Arrays.toString(encode));
+        //byte[]转BASE64
+        byte[] b64 = org.bouncycastle.util.encoders.Base64.encode(encode);
+        System.out.println("base64----------" + Arrays.toString(b64));
+        //b64转换十六进制
+        String str = new BigInteger(1, b64).toString(16);
+        System.out.println("16进制----------" + str);
+             
+        return null;
     }
+ 
+    public static void main(String[] args) {
+        TestAsn1.sequence();
+ 
+    }
+}
+```
 
 ASN.1解析：
 
