@@ -4,5 +4,15 @@
 
 
 
-![image-20210609095212743](https://gitee.com/AiShiYuShiJiePingXing/img/raw/master/img/image-20210609095212743.png)
+```ASN.1
+-- Main message frame
+MessageFrame ::= CHIOCE {
+	bsmFrame BasicSafatyMessage,
+	mapFrame MapData,
+	rsmFrame RoadsideSafetyMessage,
+	spatFrame SPAT,
+	rsiFrame RoadSideInfomation,
+	...
+}
+```
 
