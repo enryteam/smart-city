@@ -1,0 +1,21 @@
+- [基于计算机视觉的交通路口智能监控系统](https://github.com/Kevinnan-teen/Intelligent-Traffic-Based-On-CV)
+
+## 1、项目介绍
+
+**项目背景**:智能交通监控系统采用识别技术进行分析，有异常状况发生(比如，当有行人闯红灯时、路口车辆和行人流量过大，导致堵塞交通时)就会自动通知交通管理人员．
+
+## 2、项目演示
+
+演示视频地址 : https://lucasnan.gitee.io/info/video.html
+
+## 3、环境依赖
+
+- SRS流媒体服务器
+
+使用开源的[SRS实时视频服务器](https://github.com/ossrs/srs)，在之前购买的阿里云服务器上搭建了一个流媒体服务器，详细的过程可以参考我的博客－－[基于SRS搭建RTMP直播推流服务器](http://kevinnan.org.cn/index.php/archives/537/)．
+
+当然，如果你没有云服务器，也可以在本地的Linux机器上搭建SRS流媒体服务器，搭建方法可以查看该项目文档，也可参考之前提到的我的博客．
+
+- GPU服务器
+
+我直接在本地运行服务端脚本来替代GPU服务器．如果是要部署的话，只需要修改服务器脚本`server_selector.py`中的`IP`和`Port`即可．
