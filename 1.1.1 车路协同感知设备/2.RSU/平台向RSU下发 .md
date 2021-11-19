@@ -1,6 +1,6 @@
-[TOC]
 
-# 一、Message Frame消息帧
+
+## 一、Message Frame消息帧
 
 - 一个消息帧中可接受的消息类型包括了：BSM，MAP，RSM，SPAT，RSI。
 
@@ -18,7 +18,7 @@ rsiFrame RoadSidelnformation,	//路侧信息
 }
 ```
 
-## 1.1 BSM-bsmFrame Basic Safety Message基本安全消息
+### 1.1 BSM-bsmFrame Basic Safety Message基本安全消息
 
 ```json
 【定义】
@@ -48,7 +48,7 @@ safetyExt VehicleSafetyExtensions OPTIONAL,	//车辆安全辅助信息集合，�
 }
 ```
 
-## 1.2 MAP-mapFrame MapData地图数据
+### 1.2 MAP-mapFrame MapData地图数据
 
 ```json
 【定义】
@@ -63,7 +63,7 @@ timeStamp MinuteOfTheYear OPTIONAL,		//时间戳
 }
 ```
 
-## 1.3 RSM-rsmFrame RoadsideSafetyMessage路侧安全消息
+### 1.3 RSM-rsmFrame RoadsideSafetyMessage路侧安全消息
 
 ```json
 【定义】 
@@ -83,7 +83,7 @@ participants ParticipantList, 	//交通参与者列表，应用于RSM 消息中 
 }
 ```
 
-## 1.4 RSI-rsiFrame RoadSidelnformation路侧信息
+### 1.4 RSI-rsiFrame RoadSidelnformation路侧信息
 
 ```json
 【定义】
@@ -121,7 +121,7 @@ alertRadius Radius,	//告警路径的宽度 半径（路的一半宽度）
 }
 ```
 
-## 1.5 SPAT-spatFrame信号灯消息
+### 1.5 SPAT-spatFrame信号灯消息
 
 ```json
 【定义】

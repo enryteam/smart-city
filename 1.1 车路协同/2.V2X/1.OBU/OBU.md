@@ -1,2 +1,0 @@
-OBU（即On board Unit的缩写），直译就是车载单元的意思，就是采用DSRC（Dedicated Short Range Communication）技术，与RSU进行通讯的微波装置。在[ETC](https://baike.baidu.com/item/ETC)系统中，OBU放在车上，路边架设路侧单元（RSU-Road Side  Unit），相互之间通过微波进行通讯。车辆高速通过RSU的时候，OBU和RSU之间用微波通讯，就像我们的非接触卡一样，只不过距离更远--十几米，频率更高--5.8GHz ，通过的时候，识别真假，获得车型，计算费率，扣除通行费。
-
