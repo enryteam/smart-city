@@ -100,7 +100,7 @@ GET https://{endpoint}/v1/{project_id}/nodes/{global_node_id}
 
 ![image-20211119141345583](https://gitee.com/er-huomeng/l-img/raw/master/image-20211119141345583.png)
 
-### 1.1MAPSource 字段数据结构说明
+### 1.1 MAPSource 字段数据结构说明
 
 该字段被如下接口使用
 
