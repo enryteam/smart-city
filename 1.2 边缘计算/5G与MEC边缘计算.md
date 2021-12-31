@@ -6,20 +6,20 @@
 
 ## 参考文献
 
-https://www.huxiu.com/article/259186.html
- http://www.fjii.com/kj/jsc/2018/0830/179967.shtml
- https://www.sohu.com/a/125297875_465915
- https://www.sdnlab.com/19818.html
- http://blueskyfreeway.blogspot.com/2018/07/5g-1-itu-2020-ran.html
- http://blueskyfreeway.blogspot.com/2018/07/5g-2-mec-mobile-edge-computing.html
- http://blueskyfreeway.blogspot.com/2018/07/5g-3-next-generation-core-ngc-or-5g.html
- https://blog.csdn.net/gongxifacai_believe/article/details/80804841?utm_source=app
- https://blog.csdn.net/gongxifacai_believe/article/details/80807176?utm_source=app
- https://blog.csdn.net/gongxifacai_believe/article/details/80811247?utm_source=app
- https://mp.weixin.qq.com/s/-5wx2cuL7tppho0_wA9mSA
- https://www.etsi.org/deliver/etsi_gs/MEC/001_099/003/02.01.01_60/gs_MEC003v020101p.pdf
- https://www.etsi.org/deliver/etsi_gr/MEC/001_099/017/01.01.01_60/gr_MEC017v010101p.pdf
- https://www.etsi.org/images/files/ETSIWhitePapers/etsi_wp28_mec_in_5G_FINAL.pdf
+- https://www.huxiu.com/article/259186.html
+- http://www.fjii.com/kj/jsc/2018/0830/179967.shtml
+- https://www.sohu.com/a/125297875_465915
+- https://www.sdnlab.com/19818.html
+- http://blueskyfreeway.blogspot.com/2018/07/5g-1-itu-2020-ran.html
+- http://blueskyfreeway.blogspot.com/2018/07/5g-2-mec-mobile-edge-computing.html
+- http://blueskyfreeway.blogspot.com/2018/07/5g-3-next-generation-core-ngc-or-5g.html
+- https://blog.csdn.net/gongxifacai_believe/article/details/80804841?utm_source=app
+- https://blog.csdn.net/gongxifacai_believe/article/details/80807176?utm_source=app
+- https://blog.csdn.net/gongxifacai_believe/article/details/80811247?utm_source=app
+- https://mp.weixin.qq.com/s/-5wx2cuL7tppho0_wA9mSA
+- https://www.etsi.org/deliver/etsi_gs/MEC/001_099/003/02.01.01_60/gs_MEC003v020101p.pdf
+- https://www.etsi.org/deliver/etsi_gr/MEC/001_099/017/01.01.01_60/gr_MEC017v010101p.pdf
+- https://www.etsi.org/images/files/ETSIWhitePapers/etsi_wp28_mec_in_5G_FINAL.pdf
 
 ## 通信网络
 
