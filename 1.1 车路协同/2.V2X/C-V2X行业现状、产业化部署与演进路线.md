@@ -1,4 +1,5 @@
 - [C-V2X行业现状、产业化部署与演进路线](https://zhuanlan.zhihu.com/p/120359618)
+- [一文带你看透C-V2X行业现状、产业化部署与演进路线 ](https://www.leiphone.com/category/transportation/lRF5rVkCodEUAeYU.html)
 
 无论是“新基建”概念中的5G基建、《智能汽车创新发展战略》的出台，还是国内自动驾驶分级标准的发布，都预示着车联网行业即将迎来高光时刻。
 
