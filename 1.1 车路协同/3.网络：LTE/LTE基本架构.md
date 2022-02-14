@@ -4,9 +4,10 @@
 
 ## 1 LTE网络参考模型
 
-![这是摘自Netmanias的图](https://img-blog.csdn.net/20171205135248900?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvc3RhcnBlcmZlY3Rpb24=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast) 
- 这是一张非常有名的LTE架构图，从图中可以看出，整个网络构架被分为了四个部分，包括由中间两个框框起来的E-UTRAN部分和EPC部分，还有位于两边的UE和PDN两部分。 
- 在日常生活中，UE就可以看作是我们的手机终端，而PDN可以看作是网络上的服务器，E-UTRAN可以看作是遍布城市的各个基站（可以是大的铁塔基站，也可以是室内悬挂的只有路由器大小的小基站），而EPC可以看作是运营商（中国移动/中国联通/中国电信）的核心网服务器，核心网包括很多服务器，有处理信令的，有处理数据的，还有处理计费策略的等等。 
+![image-20220214135406113](https://gitee.com/er-huomeng/l-img/raw/master/l-img/image-20220214135406113.png)
+
+这是一张非常有名的LTE架构图，从图中可以看出，整个网络构架被分为了四个部分，包括由中间两个框框起来的E-UTRAN部分和EPC部分，还有位于两边的UE和PDN两部分。 
+ 在日常生活中，UE就可以看作是我们的手机终端，而PDN可以看作是网络上的服务器，E-UTRAN可以看作是遍布城市的各个基站（可以是大的铁塔基站，也可以是室内悬挂的只有路由器大小的小基站），而EPC可以看作是运营商（中国移动/中国联通/中国电信)的核心网服务器，核心网包括很多服务器，有处理信令的，有处理数据的，还有处理计费策略的等等。 
  下面详细地介绍每一个组件的名称与作用
 
 ### UE
@@ -87,7 +88,7 @@ S1用户面的接口是建立在GTP-U协议的基础上，连接基站与MME，�
 说协议栈，就得分开从两方面来讲，分别是用户面与控制面。 
  先从用户面开始说起
 
-![LTE User Plane Protocol Stack](https://img-blog.csdn.net/20171205171429612?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvc3RhcnBlcmZlY3Rpb24=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![image-20220214135438233](https://gitee.com/er-huomeng/l-img/raw/master/l-img/image-20220214135438233.png)
 
 上图是用户面的协议栈，下面详细地介绍每一个层（主要功能）
 
@@ -125,7 +126,7 @@ GTP-U协议主要是用来转发用户的IP数据包，GTP-U协议还有个特�
 
 下面是控制面的协议栈
 
-![LTE协议控制面](https://img-blog.csdn.net/20171207142514879?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvc3RhcnBlcmZlY3Rpb24=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![image-20220214135502157](https://gitee.com/er-huomeng/l-img/raw/master/l-img/image-20220214135502157.png)
 
 上面是关于控制面的总图，包含了LTE-Uu，S1-MME，S11等接口的，由于本人业务限制，对其他的不了解，就只简单地介绍下面几个
 
@@ -160,13 +161,14 @@ S1AP协议如前所述，是S1 连接建立的时候用来传输信令的协议�
 这里通过一个简单的例子来全盘地看一下LTE系统是怎么样运转地。
 
 首先是从终端到Internet的方向传输，也就是我们通常所说的“上行传输” 
- ![上行传输](https://img-blog.csdn.net/20171207145344658?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvc3RhcnBlcmZlY3Rpb24=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+
+![image-20220214135518615](https://gitee.com/er-huomeng/l-img/raw/master/l-img/image-20220214135518615.png)
 
 上面这个例子记述了包从UE是怎么一步一步地通过LTE系统传输到Internet的。 
  首先，UE发出一个包时，包上面会打上UE的地址作为源地址，要去的因特网上的服务器的地址作为目的地址，传送给基站eNB，然后基站给包封装到GTP  隧道里可以传输的GTP包，每个包的源地址会被换成基站的地址，而目的地址则是被换成将要到达的Serving  Gateway，然后，每个包也会包含他们所在传输隧道的隧道ID：UL S1-TEID。当包到达Serving  Gateway时，源目地址被分别换成了Serving Gateway和P-GW的地址，同时，传输的隧道也由S1 GTP 隧道变成了S5  GTP隧道，当然隧道ID也会随之变化。最后，当包到达P-GW后，这时P-GW讲GTP解开，查看其真正的目的地址，然后将包送到互联网上。这样子就完成了一个数据包从终端的互联网的上传。
 
 下面看一下下行的传输
 
-![下行传输](https://img-blog.csdn.net/20171207150946863?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvc3RhcnBlcmZlY3Rpb24=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![image-20220214135541418](https://gitee.com/er-huomeng/l-img/raw/master/l-img/image-20220214135541418.png)
 
 下行的情况与上行的情况正好相反，经过P-GW，S-GW，eNB时会对数据包打包，在eNB处会解封装，然后直接把数据包传输给UE。
