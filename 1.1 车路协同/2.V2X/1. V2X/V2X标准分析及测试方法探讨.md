@@ -6,7 +6,7 @@
 
 ![image-20211206143720793](https://gitee.com/er-huomeng/img/raw/master/image-20211206143720793.png)
 
-![image-20211206143731207](https://gitee.com/er-huomeng/img/raw/master/image-20211206143731207.png)
+![image-20211206143731207](C:\Users\10902\Desktop\image-20211206143731207.png)
 
 ![image-20211206143739898](https://gitee.com/er-huomeng/img/raw/master/image-20211206143739898.png)
 
