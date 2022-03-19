@@ -2,7 +2,7 @@
 
 因为内容都是基于Markdown进行整理的，所以推荐使用Markdown工具进行阅读。
 
-仓库地址： https://gitee.com/AiShiYuShiJiePingXing/smart-city.git
+
 
 # 一、推荐阅读工具
 
@@ -42,12 +42,8 @@ Typora：一款轻便简洁的Markdown编辑器
 
 本站文章引用或转载写明来源，感谢原作者的辛苦写作，如果有异议或侵权，及时联系我处理，谢谢！
 
-更多车路协同，车路协同建设解决方案，参考链接：https://gitee.com/AiShiYuShiJiePingXing/smart-city
 
-个人网站：https://www.lovebetterworld.com/
 
-- QQ：1090239782
-- 微信：lovebetterworld
-- 公众号：爱是与世界平行
+
 
 ![image-20210702094058887](https://gitee.com/AiShiYuShiJiePingXing/img/raw/master/img/image-20210702094058887.png)
