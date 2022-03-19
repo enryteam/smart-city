@@ -14,7 +14,7 @@ Typora：一款轻便简洁的Markdown编辑器
 
 # 二、如何使用
 
-1. 克隆文档到本地：``git clone  https://gitee.com/AiShiYuShiJiePingXing/smart-city.git`
+1. 克隆文档到本地：``git clone  https://github.com/enryteam/smart-city.git`
 2. 推荐使用Typora打开文件夹的方式打开，并设置Typora视图显示文件树
 
 ![image-20210518123041125](https://gitee.com/AiShiYuShiJiePingXing/img/raw/master/img/image-20210518123041125.png)
